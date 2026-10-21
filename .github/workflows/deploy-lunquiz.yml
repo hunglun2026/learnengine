@@ -1,0 +1,53 @@
+name: deploy lunquiz-live
+
+# 小綸即時測驗：前端靜態檔＋Durable Object 房間伺服器，部署成同一個 Cloudflare Worker（hunglun2026 帳號）。
+# 這個 repo 由 ClaudeOnly 的 school/learnengine/publish.ps1 同步上來，原始碼真正的家在 ClaudeOnly。
+#
+# ⚠ Settings → Secrets and variables → Actions 要有兩個：
+#     CLOUDFLARE_API_TOKEN   = hunglun2026 的 Cloudflare API Token
+#     CLOUDFLARE_ACCOUNT_ID  = hunglun2026 帳號的 Account ID
+#
+# classgames 不歸這支管，由 Cloudflare Pages 的 Git 整合自己建置。
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "engine/**"
+      - "lunquiz-live/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".github/workflows/deploy-lunquiz.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-lunquiz-live
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.14.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: pnpm
+      - name: 安裝相依套件
+        run: pnpm install --frozen-lockfile
+      - name: 測試與型別檢查（沒過就不部署）
+        run: |
+          pnpm --filter @learnengine/engine test
+          pnpm -r typecheck
+      - name: 打包前端
+        run: pnpm --filter @learnengine/lunquiz-live-web build
+      - name: 部署到 Cloudflare（hunglun2026）
+        working-directory: lunquiz-live/worker
+        run: pnpm exec wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

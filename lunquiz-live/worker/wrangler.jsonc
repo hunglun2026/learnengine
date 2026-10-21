@@ -4,6 +4,11 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-08-01",
   "compatibility_flags": ["nodejs_compat"],
+  // 正式網址只用 hunglun.com（Steve 2026-10-21：不要有 dev）。
+  // 綁自訂網域、關掉 lunquiz-live.hunglun2026.workers.dev 與每版預覽網址
+  "routes": [{ "pattern": "quiz.hunglun.com", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false,
   // 前端（../web 打包結果）跟房間伺服器放同一個 Worker、同一個網址：
   // 沒有跨網域問題，前後端一次部署、版本不會一新一舊。
   // 有對應檔案的路徑直接送檔案，其餘（/parties/...）才進 Worker 程式。

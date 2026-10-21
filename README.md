@@ -4,8 +4,8 @@
 
 | 子專案 | 做什麼 | 網址 |
 |---|---|---|
-| `lunquiz-live` | 小綸即時測驗：老師開房，整份卷子發給學生各自作答，老師即時看到誰寫到哪、哪題錯，結束後下載 Excel 成績 | https://lunquiz-live.hunglun2026.workers.dev |
-| `classgames` | 課堂遊戲工坊：請 Gemini 出題、貼回來，一份題庫變成五款課堂遊戲，連結傳給學生就能玩 | https://hunglun-classgames.pages.dev |
+| `lunquiz-live` | 小綸即時測驗：老師開房，整份卷子發給學生各自作答，老師即時看到誰寫到哪、哪題錯，結束後下載 Excel 成績 | https://quiz.hunglun.com |
+| `classgames` | 課堂遊戲工坊：請 Gemini 出題、貼回來，一份題庫變成五款課堂遊戲，連結傳給學生就能玩 | https://classgames.hunglun.com |
 | `engine` | 共用引擎：題庫格式驗證、判分、房間狀態、成績匯出、React 元件 | |
 
 ## 開發

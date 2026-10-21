@@ -6,7 +6,7 @@ import type { ClientMessage, Player, PublicQuestion, Question, RoomState, Server
 export type ConnStatus = "connecting" | "open" | "closed";
 
 export interface UseRoomOptions {
-  /** worker 的網址，例如 https://lunquiz-live.xxx.workers.dev */
+  /** worker 的網址，例如 https://quiz.hunglun.com */
   host: string;
   roomId: string;
   /** 老師端帶 hostToken；學生端帶 playerId + name */

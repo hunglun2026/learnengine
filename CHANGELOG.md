@@ -4,6 +4,9 @@
 
 ## 2026-10-21
 
+正式網址：小綸即時測驗 https://quiz.hunglun.com 、課堂遊戲工坊 https://classgames.hunglun.com 。
+不使用 workers.dev／pages.dev 網址（workers.dev 已關閉；pages.dev 首頁永久轉址到正式網址）。
+
 ### 小綸即時測驗 v1.0.0（第一次正式上線）
 - 交卷、結束作答、移出學生都改用網站自己的確認視窗，交卷時提醒還有幾題沒寫
 - 倒數計時每秒更新（原本沒人作答時會停住）
