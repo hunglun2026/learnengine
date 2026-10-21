@@ -4,9 +4,10 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-08-01",
   "compatibility_flags": ["nodejs_compat"],
-  // 正式網址只用 hunglun.com（Steve 2026-10-21：不要有 dev）。
-  // 綁自訂網域、關掉 lunquiz-live.hunglun2026.workers.dev 與每版預覽網址
-  "routes": [{ "pattern": "quiz.hunglun.com", "custom_domain": true }],
+  // 正式網址只用 https://quiz.hunglun.com（Steve 2026-10-21：不要有 dev）。
+  // 自訂網域「不寫在這裡的 routes」：wrangler 綁網域會讀 hunglun.com 的路由清單，部署用的 token 沒有網域層級權限，
+  // 會在最後一步失敗。改用帳號層級 API 綁一次就好（PUT /accounts/{id}/workers/domains，service=lunquiz-live），
+  // 之後部署不會動到它。這裡只負責關掉 lunquiz-live.hunglun2026.workers.dev 與每版預覽網址。
   "workers_dev": false,
   "preview_urls": false,
   // 前端（../web 打包結果）跟房間伺服器放同一個 Worker、同一個網址：
