@@ -143,7 +143,12 @@ function PlayRoom({ roomId, playerId, name }: { roomId: string; playerId: string
           onClick={async () => {
             // 文字題可能還沒送出，交卷前補送一次
             for (const q of questions) if (q.options.length === 0) flushText(q.id);
-            const blank = (state?.questionCount ?? 0) - answeredCount;
+            // 用畫面上實際填的內容算，不用伺服器回報的已答數：填充題剛打完還在送出途中，
+            // 伺服器還沒算進去，會多報沒寫的題數（2026-10-21 雷電 Android 實測抓到）
+            const blank = questions.filter((q) => {
+              const v = draft[q.id];
+              return v === undefined || (Array.isArray(v) ? v.length === 0 : !v.trim());
+            }).length;
             const ok = await askConfirm({
               title: "確定要交卷嗎？",
               message:
