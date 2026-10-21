@@ -1,0 +1,19 @@
+packages:
+  - 'engine'
+  - 'lunquiz-live/web'
+  - 'lunquiz-live/worker'
+allowBuilds:
+  esbuild: true
+  workerd: true
+# 套件供應鏈防護（check-bug semgrep 建議）：
+# 新發布的版本等滿 7 天才裝，惡意版本通常幾天內就會被抓出來下架
+minimumReleaseAge: 10080
+# 間接相依不准從 git／網址等非 registry 來源安裝（直接相依的 xlsx 官方網址不受影響）
+blockExoticSubdeps: true
+# 套件更新不准降低既有的安全設定
+trustPolicy: no-downgrade
+# 例外：這兩個是正規套件的舊版，發布時還沒有來源證明（provenance）機制，被判成降級屬誤判
+# （semver@6 由 @vitejs/plugin-react 的 babel 間接引用，undici-types@6 由 @types/node@22 引用）
+trustPolicyExclude:
+  - 'semver@6.3.1'
+  - 'undici-types@6.21.0'

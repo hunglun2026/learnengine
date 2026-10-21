@@ -1,0 +1,9 @@
+# Worker 靜態資源的回應標頭（只套用在前端檔案，/parties/... 的房間 API 不經過這裡）。
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+# Vite 打包出的檔名帶內容雜湊，內容一變檔名就變，可以放心長快取
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

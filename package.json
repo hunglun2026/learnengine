@@ -1,0 +1,13 @@
+{
+  "name": "learnengine",
+  "private": true,
+  "version": "0.1.0",
+  "description": "學習互動評量引擎：寫一份題庫檔就能跑出一場課堂即時評量",
+  "scripts": {
+    "dev": "pnpm --filter @learnengine/lunquiz-live-web dev",
+    "dev:worker": "pnpm --filter @learnengine/lunquiz-live-worker dev",
+    "build": "pnpm --filter @learnengine/lunquiz-live-web build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm --filter @learnengine/engine test"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lunquiz-live",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // 前端（../web 打包結果）跟房間伺服器放同一個 Worker、同一個網址：
+  // 沒有跨網域問題，前後端一次部署、版本不會一新一舊。
+  // 有對應檔案的路徑直接送檔案，其餘（/parties/...）才進 Worker 程式。
+  "assets": {
+    "directory": "../web/dist",
+    "binding": "ASSETS"
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "QuizRoom", "class_name": "QuizRoom" }]
+  },
+  "migrations": [
+    {
+      // 2026-07 起新的 namespace 只能用 SQLite backend，這裡一開始就用對
+      "tag": "v1",
+      "new_sqlite_classes": ["QuizRoom"]
+    }
+  ],
+  // 開房限流：同一個 IP 每 60 秒最多開 10 間（老師才會開房；學生連線不限，因為整班常共用一個學校 IP）
+  // namespace_id 是自己定的整數，同帳號內不要跟別的 Worker 重複
+  "ratelimits": [
+    {
+      "name": "CREATE_LIMITER",
+      "namespace_id": "4101",
+      "simple": { "limit": 10, "period": 60 }
+    }
+  ],
+  "observability": { "enabled": true }
+}

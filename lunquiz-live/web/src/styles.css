@@ -1,0 +1,503 @@
+/* 上課用的介面：學生多半拿手機、老師接投影機，
+   所以字要夠大、觸控目標要夠大，監控牆在窄螢幕要能橫向捲動而不是把整頁撐破。 */
+
+:root {
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --ink: #1b1f2a;
+  --muted: #6b7280;
+  --line: #e3e6ef;
+  --brand: #2563eb;
+  --ok: #16a34a;
+  --bad: #dc2626;
+  --warn: #d97706;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  min-height: 44px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+  font-weight: 700;
+}
+
+button.danger {
+  background: var(--bad);
+  border-color: var(--bad);
+  color: #fff;
+}
+
+input,
+select {
+  font: inherit;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  min-height: 44px;
+  width: 100%;
+}
+
+.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  white-space: pre-wrap;
+}
+
+/* ---- 首頁 ---- */
+.home {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.home h1 {
+  margin-bottom: 0.25rem;
+}
+
+.home .sub {
+  color: var(--muted);
+  margin-top: 0;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.card h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+}
+
+.join-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.join-form input {
+  flex: 1;
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.field {
+  display: block;
+  margin-bottom: 0.9rem;
+}
+
+.field > span {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+
+/* ---- 老師端 ---- */
+.host {
+  padding: 1rem;
+}
+
+.host-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.75rem 1rem;
+}
+
+.room-code .label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.room-code strong {
+  font-size: 2rem;
+  letter-spacing: 0.15em;
+}
+
+.conn {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.conn.closed {
+  color: var(--bad);
+  font-weight: 700;
+}
+
+.timer {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.host-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.host-actions h2 {
+  margin: 0;
+  margin-right: auto;
+  font-size: 1.05rem;
+}
+
+/* 監控牆：欄位可能很多，一定要能自己橫向捲，不能撐破整頁 */
+.monitor {
+  overflow-x: auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.monitor-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.monitor-table th,
+.monitor-table td {
+  border-bottom: 1px solid var(--line);
+  padding: 0.4rem 0.5rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.monitor-table .sticky-col {
+  position: sticky;
+  left: 0;
+  background: var(--card);
+  text-align: left;
+  z-index: 1;
+  min-width: 8rem;
+}
+
+.rate-row th {
+  font-weight: 500;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.rate-row th.low {
+  color: var(--bad);
+  font-weight: 700;
+}
+
+/* 每格之間留白線，才看得出哪格是哪題；除了顏色再加符號，色弱的老師也分得出對錯 */
+.monitor-table td.cell {
+  min-width: 2.2rem;
+  height: 1.6rem;
+  border-left: 3px solid #fff;
+  border-right: 3px solid #fff;
+  font-weight: 700;
+}
+
+.cell.ok {
+  background: #dcfce7;
+  color: var(--ok);
+}
+
+.cell.ok::after {
+  content: "✓";
+}
+
+.cell.bad {
+  background: #fee2e2;
+  color: var(--bad);
+}
+
+.cell.bad::after {
+  content: "✗";
+}
+
+.cell.empty {
+  background: #f3f4f6;
+}
+
+tr.offline {
+  opacity: 0.5;
+}
+
+.dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #cbd5e1;
+  margin-right: 0.4rem;
+}
+
+.dot.on {
+  background: var(--ok);
+}
+
+.tag {
+  margin-left: 0.4rem;
+  font-size: 0.7rem;
+  background: #eef2ff;
+  color: var(--brand);
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+}
+
+.score {
+  font-weight: 700;
+}
+
+.kick {
+  padding: 0.2rem 0.5rem;
+  min-height: 0;
+  font-size: 0.75rem;
+}
+
+.empty-hint {
+  padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ---- 學生端 ---- */
+.play {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1rem 1rem 5rem;
+}
+
+.play-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.play-meta {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.play-meta .final {
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.who {
+  margin-left: 0.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.waiting {
+  text-align: center;
+  color: var(--muted);
+  padding: 3rem 1rem;
+}
+
+.q-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--line);
+  border-radius: 14px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.q-card.is-correct {
+  border-left-color: var(--ok);
+}
+
+.q-card.is-wrong {
+  border-left-color: var(--bad);
+}
+
+.q-head {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.q-no {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.q-mark {
+  margin-left: auto;
+  font-weight: 700;
+}
+
+.is-correct .q-mark {
+  color: var(--ok);
+}
+
+.is-wrong .q-mark {
+  color: var(--bad);
+}
+
+.q-text {
+  font-size: 1.05rem;
+  margin: 0.5rem 0 0.9rem;
+}
+
+.q-options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.q-opt {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 0.7rem 0.9rem;
+}
+
+.q-opt.picked {
+  border-color: var(--brand);
+  background: #eff6ff;
+}
+
+.q-opt.answer {
+  border-color: var(--ok);
+  background: #f0fdf4;
+}
+
+.q-opt-key {
+  font-weight: 700;
+  color: var(--muted);
+  min-width: 1.2rem;
+}
+
+.q-reveal {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px dashed var(--line);
+  font-size: 0.9rem;
+}
+
+.q-exp {
+  color: var(--muted);
+  margin: 0.3rem 0 0;
+}
+
+button.submit {
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* ---- 提醒、頁尾版本號 ---- */
+.notice {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+}
+
+.app-footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 1.5rem 1rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* ---- 確認對話框（取代瀏覽器內建 confirm） ---- */
+.dlg-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.dlg {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 1.25rem;
+  width: min(420px, 100%);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+}
+
+.dlg-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+}
+
+.dlg-msg {
+  margin: 0 0 1.25rem;
+  color: var(--ink);
+}
+
+.dlg-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
