@@ -338,6 +338,9 @@ tr.offline {
 }
 
 .who {
+  /* 名字整塊換行，不要從中間斷開（360 寬實機看到「安／卓同學」被切成兩行） */
+  display: inline-block;
+  white-space: nowrap;
   margin-left: 0.5rem;
   color: var(--muted);
   font-size: 0.85rem;
